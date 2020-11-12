@@ -1,8 +1,13 @@
-function App() {
+import React from "react";
+import { Provider } from "./Provider";
+import Main from "./components/Main";
+
+const App = () => {
   return (
-    <div className="App">
-    </div>
+    <Provider>
+      <Main />
+    </Provider>
   );
-}
+};
 
 export default App;
