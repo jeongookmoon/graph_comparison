@@ -1,7 +1,12 @@
 import React from "react";
+import Grid from "./Grid";
 
 const Main = () => {
-  return <h1>Main</h1>;
+  return(
+    <div className="main">
+      <Grid />
+    </div>
+  );
 };
 
 export default Main;
