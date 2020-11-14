@@ -1,0 +1,1 @@
+export const getStringKeyFromRowColIndexes = (rowNum, colNum) => (rowNum*1000+colNum).toString();

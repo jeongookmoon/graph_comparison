@@ -1,7 +1,17 @@
+.container {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+}
+
 .grid {
+  margin: 0 auto;
+  display: inline-block;
+  border-right: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+
+.grid_row {
   display: flex;
   flex-direction: row;
-  outline: none;
-  height: auto;
-  margin: 0 auto;
 }
