@@ -1,3 +1,5 @@
+@import "../colors.scss";
+
 .container {
   margin-top: 10%;
   display: flex;
@@ -7,8 +9,8 @@
 .grid {
   margin: 0 auto;
   display: inline-block;
-  border-right: 1px solid grey;
-  border-bottom: 1px solid grey;
+  border-right: 1px solid $border_color;
+  border-bottom: 1px solid $border_color;
 }
 
 .grid_row {

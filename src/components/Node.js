@@ -1,19 +1,22 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../Provider";
-import { getStringKeyFromRowColIndexes } from "../helper";
+import { NODE_CLASSNAME } from "../constants";
 import "./node.scss";
 
-const Node = ({ row_index, col_index }) => {
-  const [type, setType] = useState("");
-  const { nodeTypeSetterRef } = useContext(Context);
-  const nodeKey = getStringKeyFromRowColIndexes(row_index, col_index);
+const Node = ({ row_index, col_index, curr_type }) => {
+  // const [type, setType] = useState(curr_type);
+  // const { gridNodesTypeSetterRef } = useContext(Context);
 
-  nodeTypeSetterRef.current[nodeKey] = setType;
+  // gridNodesTypeSetterRef.current[node_key] = setType;
+
   return (
     <div
-      className="each_node"
+      className={NODE_CLASSNAME}
       data-row_index={row_index}
       data-col_index={col_index}
+      style={{
+        backgroundColor: curr_type,
+      }}
     />
   );
 };

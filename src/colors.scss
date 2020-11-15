@@ -1,0 +1,17 @@
+$border_color: grey;
+$light_white: #f8f8f8;
+$light_grey: #efeff0;
+$light_purple: #d5cad6;
+$light_greygreen: #daddd8;
+$light_pink: #edbfb7;
+$light_yellowish_green: #dbd56e;
+
+:export {
+  border_color: $border_color;
+  light_white: $light_white;
+  light_grey: $light_grey;
+  light_purple: $light_purple;
+  light_greygreen: $light_greygreen;
+  light_pink: $light_pink;
+  light_yellowish_green: $light_yellowish_green;
+}
