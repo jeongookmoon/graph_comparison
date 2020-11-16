@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { Context } from "../Provider";
+import React from "react";
 import { NODE_CLASSNAME } from "../constants";
 import "./node.scss";
 
