@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "./Grid";
 
 const Main = () => {
-  return(
+  return (
     <div className="main">
       <Grid />
     </div>

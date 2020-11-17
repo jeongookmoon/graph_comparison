@@ -1,4 +1,5 @@
 $border_color: grey;
+$background_color: #f5f5f5;
 $light_white: #f8f8f8;
 $light_grey: #efeff0;
 $light_purple: #d5cad6;
@@ -8,6 +9,7 @@ $light_yellowish_green: #dbd56e;
 
 :export {
   border_color: $border_color;
+  background_color: $background_color;
   light_white: $light_white;
   light_grey: $light_grey;
   light_purple: $light_purple;

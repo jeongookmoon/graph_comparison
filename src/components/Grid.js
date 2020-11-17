@@ -3,14 +3,19 @@ import {
   GRID_INFO,
   EMPTY_NODE,
   WALL_NODE,
+  REVIEWED_NODE,
+  SOLUTION_NODE,
   START_NODE,
   START_NODE_POSITION_INFO,
   END_NODE,
   END_NODE_POSITION_INFO,
   NODE_CLASSNAME,
 } from "../constants";
+import { getRowAndColIndexesObjectFromStringKey } from "../helper";
 import Node from "./Node";
+import runAstar from "../algorithms/runAstar";
 import "./grid.scss";
+import "./menu.scss";
 
 const Grid = () => {
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -143,29 +148,65 @@ const Grid = () => {
     setGrid(newGrid);
   };
 
+  const runGraphAlgorithm = (choice) => {
+    if (choice === "Astar") {
+      const { visitedList, solutionList, notFound } = runAstar(
+        grid,
+        startNodePosition,
+        endNodePosition
+      );
+      drawSolutionPath(solutionList);
+    }
+  };
+
+  const drawSolutionPath = (pathList) => {
+    pathList.forEach((pathNode, index) => {
+      setTimeout(() => {
+        const { type } = pathNode;
+        if (type === START_NODE || type === END_NODE) return;
+        const { row_index, col_index } = getRowAndColIndexesObjectFromStringKey(
+          pathNode.key
+        );
+        const newGrid = grid.slice();
+        const currentNode = newGrid[row_index][col_index];
+        const newNode = {
+          ...currentNode,
+          curr_type: SOLUTION_NODE,
+        };
+        newGrid[row_index][col_index] = newNode;
+        setGrid(newGrid);
+      }, index*50);
+    });
+  };
+
   return (
-    <div className="container">
-      <div
-        className="grid"
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
-        onClick={onClick}
-      >
-        {grid.map((row_nodes, row_index) => (
-          <div className="grid_row" key={row_index}>
-            {row_nodes.map((a_node, col_index) => (
-              <Node
-                row_index={row_index}
-                col_index={col_index}
-                curr_type={a_node.curr_type}
-                prev_type={a_node.prev_type}
-                key={a_node.node_key}
-              />
-            ))}
-          </div>
-        ))}
+    <div>
+      <div className="menu">
+        <button onClick={() => runGraphAlgorithm("Astar")}>Find Path!</button>
+      </div>
+      <div className="container">
+        <div
+          className="grid"
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+          onClick={onClick}
+        >
+          {grid.map((row_nodes, row_index) => (
+            <div className="grid_row" key={row_index}>
+              {row_nodes.map((a_node, col_index) => (
+                <Node
+                  row_index={row_index}
+                  col_index={col_index}
+                  curr_type={a_node.curr_type}
+                  prev_type={a_node.prev_type}
+                  key={a_node.node_key}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
