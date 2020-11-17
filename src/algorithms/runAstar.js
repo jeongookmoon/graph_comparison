@@ -1,4 +1,4 @@
-import { START_NODE, END_NODE } from "../constants";
+import { START_NODE, END_NODE, WALL_NODE } from "../constants";
 import { getRowAndColIndexesObjectFromStringKey } from "../helper";
 
 class AstarNode {
@@ -69,10 +69,13 @@ class AstarNode {
     const rightNode =
       row_index < grid[0].length ? grid[row_index][col_index + 1] : null;
 
-    if (bottomNode) this._neighbors.push(bottomNode);
-    if (upperNode) this._neighbors.push(upperNode);
-    if (leftNode) this._neighbors.push(leftNode);
-    if (rightNode) this._neighbors.push(rightNode);
+    if (bottomNode && bottomNode.type !== WALL_NODE)
+      this._neighbors.push(bottomNode);
+    if (upperNode && upperNode.type !== WALL_NODE)
+      this._neighbors.push(upperNode);
+    if (leftNode && leftNode.type !== WALL_NODE) this._neighbors.push(leftNode);
+    if (rightNode && rightNode.type !== WALL_NODE)
+      this._neighbors.push(rightNode);
   }
 
   get neighbors() {
@@ -148,7 +151,11 @@ const runAstar = (grid, startNodePosition, endNodePosition) => {
         solutionNode = solutionNode.parentNode;
       }
 
-      return { visitedList, solutionList, notFound: false };
+      return {
+        visitedList,
+        solutionList: solutionList.reverse(),
+        notFound: false,
+      };
     } else visitedList.push(lowestNode);
 
     openList = openList.filter((node) => node !== lowestNode);
@@ -178,7 +185,7 @@ const runAstar = (grid, startNodePosition, endNodePosition) => {
       }
     }
   }
-  return { visitedList, solutionList, notFound: true };
+  return { visitedList, solutionList: solutionList.reverse(), notFound: true };
 };
 
 // Ref: theory.stanford.edu/~amitp/GameProgramming/Heuristics.html

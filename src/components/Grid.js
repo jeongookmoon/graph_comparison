@@ -155,7 +155,8 @@ const Grid = () => {
         startNodePosition,
         endNodePosition
       );
-      drawSolutionPath(solutionList);
+
+      drawBothPath(visitedList, solutionList);
     }
   };
 
@@ -175,7 +176,32 @@ const Grid = () => {
         };
         newGrid[row_index][col_index] = newNode;
         setGrid(newGrid);
-      }, index*50);
+      }, index * 50);
+    });
+  };
+
+  const drawBothPath = (visitedList, solutionList) => {
+    visitedList.forEach((pathNode, index) => {
+      setTimeout(() => {
+        const { type } = pathNode;
+        if (type === START_NODE || type === END_NODE) return;
+        const { row_index, col_index } = getRowAndColIndexesObjectFromStringKey(
+          pathNode.key
+        );
+        const newGrid = grid.slice();
+        const currentNode = newGrid[row_index][col_index];
+        const newNode = {
+          ...currentNode,
+          curr_type: REVIEWED_NODE,
+        };
+        newGrid[row_index][col_index] = newNode;
+        setGrid(newGrid);
+        if (index === visitedList.length - 1) {
+          setTimeout(() => {
+            drawSolutionPath(solutionList);
+          }, index * 10);
+        }
+      }, index * 30);
     });
   };
 

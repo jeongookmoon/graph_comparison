@@ -4,7 +4,7 @@ export const NODE_TYPES = {
   WALL_NODE: "#DBD56E",
   START_NODE: "#d5cad6",
   END_NODE: "#edbfb7",
-  REVIEWED_NODE: "black",
+  REVIEWED_NODE: "#EBEBEB",
   UNDER_REVIEW_NODE: "UNDER_REVIEW",
   SOLUTION_NODE: "#D0D6B3",
 };
@@ -20,8 +20,8 @@ export const {
 } = NODE_TYPES;
 export const NODE_CLASSNAME = "each_node";
 
-export const ROW_LENGTH = 6;
-export const COL_LENGTH = 6;
+export const ROW_LENGTH = 20;
+export const COL_LENGTH = 20;
 export const START_NODE_POSITION_INFO = { row_index: ROW_LENGTH - 3, col_index: 2 };
 export const END_NODE_POSITION_INFO = { row_index: 2, col_index: COL_LENGTH - 3 };
 
