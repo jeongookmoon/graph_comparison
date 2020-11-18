@@ -22,8 +22,8 @@ export const NODE_CLASSNAME = "each_node";
 
 export const ROW_LENGTH = 20;
 export const COL_LENGTH = 20;
-export const START_NODE_POSITION_INFO = { row_index: ROW_LENGTH - 3, col_index: 2 };
-export const END_NODE_POSITION_INFO = { row_index: 2, col_index: COL_LENGTH - 3 };
+export const START_NODE_POSITION_INFO = { row_index: ROW_LENGTH - 3, col_index: 3 };
+export const END_NODE_POSITION_INFO = { row_index: 3, col_index: COL_LENGTH - 3 };
 
 export const GRID_INFO = [];
 for (let row_index = 0; row_index < ROW_LENGTH; row_index++) {

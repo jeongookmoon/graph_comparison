@@ -64,7 +64,7 @@ class AstarNode {
 
     const bottomNode = row_index > 0 ? grid[row_index - 1][col_index] : null;
     const upperNode =
-      row_index < grid[row_index] - 1 ? grid[row_index - 1][col_index] : null;
+      row_index < grid[row_index] - 1 ? grid[row_index + 1][col_index] : null;
     const leftNode = col_index > 0 ? grid[row_index][col_index - 1] : null;
     const rightNode =
       row_index < grid[0].length ? grid[row_index][col_index + 1] : null;
@@ -138,9 +138,11 @@ const runAstar = (grid, startNodePosition, endNodePosition) => {
 
   openList.push(startNode);
   while (openList.length > 0) {
-    let lowestNode = openList.reduce((prevNode, currNode) =>
-      prevNode.valueF < currNode.valueF ? prevNode : currNode
+    openList.sort((prevNode, currNode) =>
+      prevNode.valueF < currNode.valueF ? -1 : 1
     );
+
+    const lowestNode = openList.shift();
 
     if (lowestNode === endNode) {
       let solutionNode = lowestNode;
@@ -158,30 +160,34 @@ const runAstar = (grid, startNodePosition, endNodePosition) => {
       };
     } else visitedList.push(lowestNode);
 
-    openList = openList.filter((node) => node !== lowestNode);
     closedList.push(lowestNode);
 
+    // update openList
     const { neighbors } = lowestNode;
     for (let i = 0; i < neighbors.length; i++) {
       const neighborNode = neighbors[i];
       if (closedList.includes(neighborNode)) continue;
 
       const newValueG = lowestNode.valueG + 1;
-      let newPathFound = false;
 
       if (openList.includes(neighborNode) && newValueG < neighborNode.valueG) {
-        neighborNode.valueG = newValueG;
-        newPathFound = true;
+        const indexForUpdate = openList.findIndex(
+          (element) => element === neighborNode
+        );
+
+        let nodeForUpdate = openList[indexForUpdate];
+        nodeForUpdate.valueG = newValueG;
+        nodeForUpdate.valueH = heuristicManhattan(nodeForUpdate, endNode);
+        nodeForUpdate.updateValueF();
+        nodeForUpdate.parentNode = lowestNode;
+
+        openList[indexForUpdate] = nodeForUpdate;
       } else if (!openList.includes(neighborNode)) {
         neighborNode.valueG = newValueG;
-        newPathFound = true;
-        openList.push(neighborNode);
-      }
-
-      if (newPathFound) {
         neighborNode.valueH = heuristicManhattan(neighborNode, endNode);
         neighborNode.updateValueF();
         neighborNode.parentNode = lowestNode;
+        openList.push(neighborNode);
       }
     }
   }
