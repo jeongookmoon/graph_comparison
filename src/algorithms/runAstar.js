@@ -62,20 +62,41 @@ class AstarNode {
       this._key
     );
 
-    const bottomNode = row_index > 0 ? grid[row_index - 1][col_index] : null;
-    const upperNode =
+    const upperNode = row_index > 0 ? grid[row_index - 1][col_index] : null;
+    // const bottomLeftNode =
+    //   row_index > 0 && col_index > 0
+    //     ? grid[row_index - 1][col_index - 1]
+    //     : null;
+    // const bottomRightNode =
+    //   row_index > 0 && col_index < grid[0].length
+    //     ? grid[row_index - 1][col_index + 1]
+    //     : null;
+    const bottomNode =
       row_index < grid[row_index] - 1 ? grid[row_index + 1][col_index] : null;
+    // const upperLeftNode =
+    //   row_index < grid[row_index] - 1 && col_index > 0
+    //     ? grid[row_index + 1][col_index - 1]
+    //     : null;
+    // const upperRightNode =
+    //   row_index < grid[row_index] - 1 && col_index < grid[0].length
+    //     ? grid[row_index + 1][col_index + 1]
+    //     : null;
     const leftNode = col_index > 0 ? grid[row_index][col_index - 1] : null;
     const rightNode =
-      row_index < grid[0].length ? grid[row_index][col_index + 1] : null;
+      col_index < grid[0].length ? grid[row_index][col_index + 1] : null;
 
-    if (bottomNode && bottomNode.type !== WALL_NODE)
-      this._neighbors.push(bottomNode);
-    if (upperNode && upperNode.type !== WALL_NODE)
-      this._neighbors.push(upperNode);
-    if (leftNode && leftNode.type !== WALL_NODE) this._neighbors.push(leftNode);
-    if (rightNode && rightNode.type !== WALL_NODE)
-      this._neighbors.push(rightNode);
+    if (bottomNode) this._neighbors.push(bottomNode);
+    // if (bottomLeftNode && bottomLeftNode.type !== WALL_NODE)
+    //   this._neighbors.push(bottomLeftNode);
+    // if (bottomRightNode && bottomRightNode.type !== WALL_NODE)
+    //   this._neighbors.push(bottomRightNode);
+    if (upperNode) this._neighbors.push(upperNode);
+    // if (upperLeftNode && upperLeftNode.type !== WALL_NODE)
+    //   this._neighbors.push(upperLeftNode);
+    // if (upperRightNode && upperRightNode.type !== WALL_NODE)
+    //   this._neighbors.push(upperRightNode);
+    if (leftNode) this._neighbors.push(leftNode);
+    if (rightNode) this._neighbors.push(rightNode);
   }
 
   get neighbors() {
@@ -143,7 +164,7 @@ const runAstar = (grid, startNodePosition, endNodePosition) => {
     );
 
     const lowestNode = openList.shift();
-
+    if (lowestNode.type === WALL_NODE) continue;
     if (lowestNode === endNode) {
       let solutionNode = lowestNode;
 
@@ -168,7 +189,7 @@ const runAstar = (grid, startNodePosition, endNodePosition) => {
       const neighborNode = neighbors[i];
       if (closedList.includes(neighborNode)) continue;
 
-      const newValueG = lowestNode.valueG + 1;
+      const newValueG = heuristicManhattan(lowestNode, neighborNode);
 
       if (openList.includes(neighborNode) && newValueG < neighborNode.valueG) {
         const indexForUpdate = openList.findIndex(
@@ -200,7 +221,10 @@ const heuristicManhattan = (nodeA, nodeB) => {
   const nodeA_col = getRowAndColIndexesObjectFromStringKey(nodeA.key).col_index;
   const nodeB_row = getRowAndColIndexesObjectFromStringKey(nodeB.key).row_index;
   const nodeB_col = getRowAndColIndexesObjectFromStringKey(nodeB.key).col_index;
-  return Math.abs(nodeA_row - nodeB_row) + Math.abs(nodeA_col - nodeB_col);
+  const dx = Math.abs(nodeA_row - nodeB_row);
+  const dy = Math.abs(nodeA_col - nodeB_col);
+  return dx + dy - 0.5 * Math.min(dx, dy);
+  // return Math.abs(nodeA_row - nodeB_row) + Math.abs(nodeA_col - nodeB_col);
 };
 
 export default runAstar;
