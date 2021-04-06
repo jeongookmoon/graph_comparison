@@ -4,9 +4,9 @@ export const NODE_TYPES = {
   WALL_NODE: "#DBD56E",
   START_NODE: "#d5cad6",
   END_NODE: "#edbfb7",
-  REVIEWED_NODE: "#EBEBEB",
+  REVIEWED_NODE: "#e3e3e3",
   UNDER_REVIEW_NODE: "UNDER_REVIEW",
-  SOLUTION_NODE: "#D0D6B3",
+  SOLUTION_NODE: "#CBDFBD",
 };
 
 export const {
@@ -22,8 +22,16 @@ export const NODE_CLASSNAME = "each_node";
 
 export const ROW_LENGTH = 20;
 export const COL_LENGTH = 20;
-export const START_NODE_POSITION_INFO = { row_index: ROW_LENGTH - 3, col_index: 2 };
-export const END_NODE_POSITION_INFO = { row_index: 2, col_index: COL_LENGTH - 3 };
+
+export const START_NODE_POSITION_INFO = {
+  row_index: Math.floor(ROW_LENGTH - ROW_LENGTH / 10) - 2,
+  col_index: Math.floor(COL_LENGTH / 10),
+};
+
+export const END_NODE_POSITION_INFO = {
+  row_index: Math.floor(ROW_LENGTH / 10),
+  col_index: Math.floor(COL_LENGTH - COL_LENGTH / 10) - 2,
+};
 
 export const GRID_INFO = [];
 for (let row_index = 0; row_index < ROW_LENGTH; row_index++) {

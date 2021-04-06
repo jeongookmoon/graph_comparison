@@ -120,6 +120,7 @@ const Grid = () => {
 
         setStartNodePosition({ row_index: currentRow, col_index: currentCol });
         break;
+
       case END_NODE:
         const endNodeRow = endNodePosition.row_index;
         const endNodeCol = endNodePosition.col_index;
@@ -134,6 +135,7 @@ const Grid = () => {
 
         setEndNodePosition({ row_index: currentRow, col_index: currentCol });
         break;
+
       default:
         break;
     }
@@ -150,7 +152,7 @@ const Grid = () => {
 
   const runGraphAlgorithm = (choice) => {
     if (choice === "Astar") {
-      const { visitedList, solutionList, notFound } = runAstar(
+      const { visitedList, solutionList } = runAstar(
         grid,
         startNodePosition,
         endNodePosition

@@ -63,6 +63,7 @@ class AstarNode {
     );
 
     const upperNode = row_index > 0 ? grid[row_index - 1][col_index] : null;
+
     // const bottomLeftNode =
     //   row_index > 0 && col_index > 0
     //     ? grid[row_index - 1][col_index - 1]
@@ -72,7 +73,7 @@ class AstarNode {
     //     ? grid[row_index - 1][col_index + 1]
     //     : null;
     const bottomNode =
-      row_index < grid[row_index] - 1 ? grid[row_index + 1][col_index] : null;
+      row_index < grid.length - 1 ? grid[row_index + 1][col_index] : null;
     // const upperLeftNode =
     //   row_index < grid[row_index] - 1 && col_index > 0
     //     ? grid[row_index + 1][col_index - 1]
@@ -86,11 +87,13 @@ class AstarNode {
       col_index < grid[0].length ? grid[row_index][col_index + 1] : null;
 
     if (bottomNode) this._neighbors.push(bottomNode);
+
     // if (bottomLeftNode && bottomLeftNode.type !== WALL_NODE)
     //   this._neighbors.push(bottomLeftNode);
     // if (bottomRightNode && bottomRightNode.type !== WALL_NODE)
     //   this._neighbors.push(bottomRightNode);
     if (upperNode) this._neighbors.push(upperNode);
+
     // if (upperLeftNode && upperLeftNode.type !== WALL_NODE)
     //   this._neighbors.push(upperLeftNode);
     // if (upperRightNode && upperRightNode.type !== WALL_NODE)
